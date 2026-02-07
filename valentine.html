@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Deepika</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffe6e6;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* --- SLIDESHOW STYLING --- */
+        .photo-container {
+            width: 180px;
+            height: 180px;
+            position: relative;
+            margin-bottom: 20px;
+            z-index: 10;
+        }
+
+        /* Styling for the images inside the slideshow */
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%; /* Circle shape */
+            border: 5px solid #ff4d4d;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0; /* Hidden by default */
+            animation: slideShow 12s infinite; /* Cycle every 12 seconds */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background-color: white;
+        }
+
+        /* Timing for 4 images */
+        .photo-container img:nth-child(1) { animation-delay: 0s; }
+        .photo-container img:nth-child(2) { animation-delay: 3s; }
+        .photo-container img:nth-child(3) { animation-delay: 6s; }
+        .photo-container img:nth-child(4) { animation-delay: 9s; }
+
+        @keyframes slideShow {
+            0% { opacity: 0; }
+            10% { opacity: 1; }  /* Fade in */
+            25% { opacity: 1; }  /* Stay visible */
+            35% { opacity: 0; }  /* Fade out */
+            100% { opacity: 0; }
+        }
+
+        /* --- TEXT & BUTTONS --- */
+        h1 {
+            color: #ff0000;
+            font-size: 1.8rem;
+            font-weight: bold;
+            z-index: 10;
+            margin: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            z-index: 10;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #dc3545;
+            color: white;
+            position: absolute; /* Allows movement */
+            transition: top 0.4s ease, left 0.4s ease;
+        }
+
+        /* --- BACKGROUND HEARTS --- */
+        .heart {
+            position: absolute;
+            color: #ff4d4d;
+            font-size: 20px;
+            animation: floatUp 5s linear infinite;
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* --- SUCCESS SCREEN --- */
+        #success-screen {
+            display: none; /* Hidden initially */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff0f5;
+            z-index: 100;
+            text-align: center;
+        }
+
+        #success-screen h1 {
+            font-size: 2.5rem;
+            color: #ff0066;
+            margin-bottom: 20px;
+            animation: pop 1s infinite alternate;
+        }
+
+        /* Video Styling */
+        video {
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            border: 4px solid #ff0066;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .graffiti {
+            font-family: 'Comic Sans MS', cursive;
+            position: absolute;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transform: rotate(-20deg);
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div id="main-screen">
+        
+        <div class="photo-container">
+            <img src="deepika1.jpg" alt="Photo 1" onerror="this.src='https://placehold.co/150x150/pink/white?text=Deepika+1'">
+            <img src="deepika2.jpg" alt="Photo 2" onerror="this.src='https://placehold.co/150x150/red/white?text=Deepika+2'">
+            <img src="deepika3.jpg" alt="Photo 3" onerror="this.src='https://placehold.co/150x150/pink/white?text=Deepika+3'">
+            <img src="deepika4.jpg" alt="Photo 4" onerror="this.src='https://placehold.co/150x150/red/white?text=Deepika+4'">
+        </div>
+
+        <h1>Deepika,<br>WILL YOU BE MY VALENTINE?</h1>
+
+        <div class="buttons">
+            <button id="yesBtn" onclick="acceptLove()">YES</button>
+            <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">NO</button>
+        </div>
+    </div>
+
+    <div id="success-screen">
+        <h1>I KNEW YOU LOVE ME! ❤️</h1>
+        
+        <video id="loveVideo" controls loop>
+            <source src="love_video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        // 1. Generate Floating Hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+
+        // 2. Logic to Move the 'NO' Button
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            
+            // Random position away from edges
+            const randomX = Math.random() * (screenWidth - 120); 
+            const randomY = Math.random() * (screenHeight - 120);
+
+            noBtn.style.position = 'fixed'; 
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // 3. Logic for 'YES' Click (Show Video)
+        function acceptLove() {
+            // Hide main screen
+            document.getElementById('main-screen').style.display = 'none';
+            
+            // Show success screen
+            const successScreen = document.getElementById('success-screen');
+            successScreen.style.display = 'flex';
+            
+            // Play the video immediately
+            const vid = document.getElementById('loveVideo');
+            vid.play().catch(error => {
+                console.log("Auto-play failed (usually due to browser permissions). User must click play.");
+            });
+
+            // Add Graffiti text
+            const graffitiTexts = ["YAY!", "LOVE U!", "FOREVER!", "❤️", "MY LOVE", "XOXO"];
+            for (let i = 0; i < 20; i++) {
+                const graffiti = document.createElement('div');
+                graffiti.classList.add('graffiti');
+                graffiti.innerText = graffitiTexts[Math.floor(Math.random() * graffitiTexts.length)];
+                graffiti.style.left = Math.random() * 90 + 'vw';
+                graffiti.style.top = Math.random() * 90 + 'vh';
+                graffiti.style.color = '#' + Math.floor(Math.random()*16777215).toString(16);
+                graffiti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                successScreen.appendChild(graffiti);
+            }
+        }
+    </script>
+</body>
+</html>
