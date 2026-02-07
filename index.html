@@ -11,25 +11,41 @@
         padding: 0;
         height: 100vh;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
         background-color: #ffe6e6;
-        font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
         overflow: hidden;
         text-align: center;
     }
 
-    /* --- SLIDESHOW STYLES --- */
+    /* HEARTS BACKGROUND */
+    .floating-heart {
+        position: absolute;
+        bottom: -20px;
+        font-size: 20px;
+        animation: floatUp linear infinite;
+        opacity: 0.6;
+        z-index: 1;
+    }
+
+    @keyframes floatUp {
+        to {
+            transform: translateY(-110vh);
+            opacity: 0;
+        }
+    }
+
+    #main-screen {
+        z-index: 10;
+    }
+
+    /* SLIDESHOW */
     .photo-container {
         width: 180px;
         height: 180px;
+        margin: auto;
         position: relative;
-        margin-bottom: 20px;
-        z-index: 10;
-        background: white;
-        border-radius: 50%;
-        box-shadow: 0 0 15px rgba(255, 0, 100, 0.3);
     }
 
     .photo-container img {
@@ -39,7 +55,6 @@
         border-radius: 50%;
         border: 5px solid #ff4d4d;
         position: absolute;
-        top: 0; left: 0;
         opacity: 0;
         animation: slideShow 12s infinite;
     }
@@ -59,44 +74,52 @@
 
     h1 {
         color: #ff0000;
-        font-size: 1.8rem;
-        z-index: 10;
-        margin: 10px;
-        text-shadow: 2px 2px 0px white;
+        margin: 15px 0;
+        text-shadow: 2px 2px white;
     }
 
-    /* --- BUTTONS --- */
+    .nepali {
+        font-size: 1.1rem;
+        color: #b30059;
+        margin-bottom: 15px;
+    }
+
+    /* BUTTONS */
     .buttons {
-        margin-top: 20px;
-        z-index: 10;
         position: relative;
+        width: 260px;
+        height: 70px;
+        margin: auto;
     }
 
     button {
-        padding: 15px 30px;
-        font-size: 1.2rem;
+        padding: 14px 28px;
+        font-size: 1.1rem;
         border: none;
         border-radius: 50px;
         cursor: pointer;
         font-weight: bold;
-        transition: transform 0.1s;
-        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        position: absolute;
     }
-    
-    button:active { transform: scale(0.95); }
 
-    #yesBtn { background-color: #28a745; color: white; margin-right: 15px; }
-    #noBtn { background-color: #dc3545; color: white; position: absolute; }
+    #yesBtn {
+        background: #28a745;
+        color: white;
+        left: 0;
+    }
 
-    /* --- SUCCESS SCREEN STYLES --- */
+    #noBtn {
+        background: #dc3545;
+        color: white;
+        right: 0;
+    }
+
+    /* SUCCESS SCREEN */
     #success-screen {
         display: none;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(120deg, #ff9a9e 0%, #fecfef 100%);
+        inset: 0;
+        background: linear-gradient(120deg, #ff9a9e, #fecfef);
         justify-content: center;
         align-items: center;
         flex-direction: column;
@@ -104,46 +127,27 @@
     }
 
     .big-heart {
-        font-size: 100px;
-        animation: heartbeat 1s infinite;
-        margin-bottom: 20px;
+        font-size: 90px;
+        animation: pulse 1s infinite;
     }
 
-    @keyframes heartbeat {
-        0% { transform: scale(1); }
-        25% { transform: scale(1.3); }
-        50% { transform: scale(1); }
-        75% { transform: scale(1.3); }
-        100% { transform: scale(1); }
+    @keyframes pulse {
+        50% { transform: scale(1.3); }
     }
 
     .success-text {
         font-size: 2rem;
         color: #d63384;
         font-weight: bold;
+        margin-top: 10px;
         text-shadow: 2px 2px white;
-        animation: popIn 0.5s ease-out;
     }
 
-    @keyframes popIn {
-        0% { transform: scale(0); opacity: 0; }
-        80% { transform: scale(1.1); opacity: 1; }
-        100% { transform: scale(1); }
+    .nepali-success {
+        margin-top: 15px;
+        font-size: 1.3rem;
+        color: #800040;
     }
-
-    /* --- FALLING EMOJIS --- */
-    .emoji-rain {
-        position: absolute;
-        top: -50px;
-        font-size: 24px;
-        z-index: 50;
-        animation: fall linear forwards;
-    }
-
-    @keyframes fall {
-        to { transform: translateY(110vh) rotate(360deg); }
-    }
-
 </style>
 </head>
 
@@ -159,61 +163,20 @@
 
     <h1>Deepika,<br>Will you be my Valentine? 💖</h1>
 
+    <div class="nepali">
+        तिमी बिना मेरो दिन अधुरो हुन्छ ❤️<br>
+        के तिमी मेरो Valentine बन्नेछौ? 🌹
+    </div>
+
     <div class="buttons">
-        <button id="yesBtn" onclick="acceptLove()">YES!</button>
-        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">NO</button>
+        <button id="yesBtn" onclick="acceptLove()">YES</button>
+        <button id="noBtn" onmouseenter="moveButton()">NO</button>
     </div>
 </div>
 
 <div id="success-screen">
     <div class="big-heart">💖</div>
-    <div class="success-text">YAYYY! <br> I KNEW IT! 😎🌹</div>
-    <div style="font-size: 4rem; margin-top: 20px;">🐻🌹🥰</div>
-</div>
-
-<script>
-    // 1. Moving the No Button
-    function moveButton() {
-        const btn = document.getElementById("noBtn");
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 50);
-        btn.style.left = x + "px";
-        btn.style.top = y + "px";
-    }
-
-    // 2. Success Function
-    function acceptLove() {
-        document.getElementById("main-screen").style.display = "none";
-        const successScreen = document.getElementById("success-screen");
-        successScreen.style.display = "flex";
-        
-        // Start the emoji rain
-        startEmojiRain();
-    }
-
-    // 3. Emoji Rain Logic (Roses and Hearts)
-    function startEmojiRain() {
-        const emojis = ["🌹", "❤️", "🥰", "💖", "💝", "🍫", "🐻"];
-        
-        // Create 100 falling emojis
-        for (let i = 0; i < 100; i++) {
-            setTimeout(() => {
-                const el = document.createElement("div");
-                el.className = "emoji-rain";
-                el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                
-                el.style.left = Math.random() * 100 + "vw";
-                el.style.animationDuration = (Math.random() * 2 + 2) + "s"; // Random speed
-                el.style.fontSize = (Math.random() * 20 + 20) + "px"; // Random size
-                
-                document.body.appendChild(el);
-                
-                // Remove element after animation to keep browser fast
-                setTimeout(() => el.remove(), 5000);
-            }, i * 50); // Stagger the rain
-        }
-    }
-</script>
-
-</body>
-</html>
+    <div class="success-text">YAY! I KNEW IT 😍🌹</div>
+    <div class="nepali-success">
+        तिमी मेरो जीवनको सबैभन्दा सुन्दर उपहार हौ ❤️<br>
+        म तिमीलाई सधैं माया
