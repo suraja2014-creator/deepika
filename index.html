@@ -37,6 +37,7 @@
         position: absolute;
         opacity: 0;
         animation: slideShow 12s infinite;
+        background-color: white; /* fallback */
     }
 
     .photo-container img:nth-child(1) { animation-delay: 0s; }
@@ -56,6 +57,7 @@
         color: #ff0000;
         font-size: 1.8rem;
         z-index: 10;
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
     }
 
     .buttons {
@@ -70,17 +72,24 @@
         border-radius: 50px;
         cursor: pointer;
         font-weight: bold;
+        transition: transform 0.2s;
+    }
+    
+    button:active {
+        transform: scale(0.95);
     }
 
     #yesBtn {
         background-color: #28a745;
         color: white;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     }
 
     #noBtn {
         background-color: #dc3545;
         color: white;
         position: absolute;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     }
 
     .heart {
@@ -88,6 +97,7 @@
         font-size: 20px;
         animation: floatUp 5s linear infinite;
         opacity: 0.6;
+        user-select: none;
     }
 
     @keyframes floatUp {
@@ -112,10 +122,11 @@
 
     #loveGif {
         width: 90%;
-        max-width: 400px;
+        max-width: 350px;
         border-radius: 15px;
         border: 4px solid #ff0066;
         box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        margin-top: 20px;
     }
 </style>
 </head>
@@ -135,18 +146,18 @@
 
     <div class="buttons">
         <button id="yesBtn" onclick="acceptLove()">YES</button>
-        <button id="noBtn" onmouseover="moveButton()">NO</button>
+        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">NO</button>
     </div>
 
 </div>
 
 <div id="success-screen">
-    <h1>I KNEW YOU LOVE ME 🌹❤️</h1>
+    <h1>YAYYY! I KNEW IT! 🌹❤️</h1>
+    <h3>See you soon my Valentine! 😘</h3>
 
-    <!-- ONLINE ROSES + HEARTS GIF -->
-    <img id="loveGif"
-         src="https://media.tenor.com/4R6nqQj4XkAAAAAC/rose-heart.gif"
-         alt="Roses and Hearts GIF">
+    <img id="loveGif" 
+         src="https://media.tenor.com/gU5h5jD1iWMAAAAC/rose-flower.gif" 
+         alt="Cute hearts and roses">
 </div>
 
 <script>
@@ -155,6 +166,7 @@
         heart.className = "heart";
         heart.innerHTML = "❤️";
         heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 2 + 3) + "s"; // Random speed
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 5000);
     }
@@ -162,13 +174,20 @@
 
     function moveButton() {
         const btn = document.getElementById("noBtn");
-        btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-        btn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 50);
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
     }
 
     function acceptLove() {
         document.getElementById("main-screen").style.display = "none";
         document.getElementById("success-screen").style.display = "flex";
+        
+        // Burst of hearts on success
+        for(let i=0; i<30; i++) {
+            setTimeout(createHeart, i * 50);
+        }
     }
 </script>
 
