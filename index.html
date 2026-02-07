@@ -15,17 +15,21 @@
         justify-content: center;
         align-items: center;
         background-color: #ffe6e6;
-        font-family: Arial, sans-serif;
+        font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
         overflow: hidden;
         text-align: center;
     }
 
+    /* --- SLIDESHOW STYLES --- */
     .photo-container {
         width: 180px;
         height: 180px;
         position: relative;
         margin-bottom: 20px;
         z-index: 10;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 0 15px rgba(255, 0, 100, 0.3);
     }
 
     .photo-container img {
@@ -35,9 +39,9 @@
         border-radius: 50%;
         border: 5px solid #ff4d4d;
         position: absolute;
+        top: 0; left: 0;
         opacity: 0;
         animation: slideShow 12s infinite;
-        background-color: white; /* fallback */
     }
 
     .photo-container img:nth-child(1) { animation-delay: 0s; }
@@ -57,55 +61,34 @@
         color: #ff0000;
         font-size: 1.8rem;
         z-index: 10;
-        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+        margin: 10px;
+        text-shadow: 2px 2px 0px white;
     }
 
+    /* --- BUTTONS --- */
     .buttons {
         margin-top: 20px;
         z-index: 10;
+        position: relative;
     }
 
     button {
-        padding: 12px 25px;
-        font-size: 1.1rem;
+        padding: 15px 30px;
+        font-size: 1.2rem;
         border: none;
         border-radius: 50px;
         cursor: pointer;
         font-weight: bold;
-        transition: transform 0.2s;
+        transition: transform 0.1s;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
     }
     
-    button:active {
-        transform: scale(0.95);
-    }
+    button:active { transform: scale(0.95); }
 
-    #yesBtn {
-        background-color: #28a745;
-        color: white;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    }
+    #yesBtn { background-color: #28a745; color: white; margin-right: 15px; }
+    #noBtn { background-color: #dc3545; color: white; position: absolute; }
 
-    #noBtn {
-        background-color: #dc3545;
-        color: white;
-        position: absolute;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    }
-
-    .heart {
-        position: absolute;
-        font-size: 20px;
-        animation: floatUp 5s linear infinite;
-        opacity: 0.6;
-        user-select: none;
-    }
-
-    @keyframes floatUp {
-        0% { transform: translateY(100vh); opacity: 0; }
-        50% { opacity: 1; }
-        100% { transform: translateY(-10vh); opacity: 0; }
-    }
-
+    /* --- SUCCESS SCREEN STYLES --- */
     #success-screen {
         display: none;
         position: fixed;
@@ -113,65 +96,83 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #fff0f5;
+        background: linear-gradient(120deg, #ff9a9e 0%, #fecfef 100%);
         justify-content: center;
         align-items: center;
         flex-direction: column;
         z-index: 100;
     }
 
-    #loveGif {
-        width: 90%;
-        max-width: 350px;
-        border-radius: 15px;
-        border: 4px solid #ff0066;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        margin-top: 20px;
+    .big-heart {
+        font-size: 100px;
+        animation: heartbeat 1s infinite;
+        margin-bottom: 20px;
     }
+
+    @keyframes heartbeat {
+        0% { transform: scale(1); }
+        25% { transform: scale(1.3); }
+        50% { transform: scale(1); }
+        75% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+    }
+
+    .success-text {
+        font-size: 2rem;
+        color: #d63384;
+        font-weight: bold;
+        text-shadow: 2px 2px white;
+        animation: popIn 0.5s ease-out;
+    }
+
+    @keyframes popIn {
+        0% { transform: scale(0); opacity: 0; }
+        80% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); }
+    }
+
+    /* --- FALLING EMOJIS --- */
+    .emoji-rain {
+        position: absolute;
+        top: -50px;
+        font-size: 24px;
+        z-index: 50;
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        to { transform: translateY(110vh) rotate(360deg); }
+    }
+
 </style>
 </head>
 
 <body>
 
 <div id="main-screen">
-
     <div class="photo-container">
-        <img src="deepika1.jpg" onerror="this.src='https://placehold.co/150x150/pink/white?text=Deepika+1'">
-        <img src="deepika2.jpg" onerror="this.src='https://placehold.co/150x150/red/white?text=Deepika+2'">
-        <img src="deepika3.jpg" onerror="this.src='https://placehold.co/150x150/pink/white?text=Deepika+3'">
-        <img src="deepika4.jpg" onerror="this.src='https://placehold.co/150x150/red/white?text=Deepika+4'">
+        <img src="deepika1.jpg" onerror="this.style.display='none'">
+        <img src="deepika2.jpg" onerror="this.style.display='none'">
+        <img src="deepika3.jpg" onerror="this.style.display='none'">
+        <img src="deepika4.jpg" onerror="this.src='https://placehold.co/150x150/pink/white?text=Deepika'">
     </div>
 
-    <h1>Deepika,<br>WILL YOU BE MY VALENTINE? 💖</h1>
+    <h1>Deepika,<br>Will you be my Valentine? 💖</h1>
 
     <div class="buttons">
-        <button id="yesBtn" onclick="acceptLove()">YES</button>
+        <button id="yesBtn" onclick="acceptLove()">YES!</button>
         <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">NO</button>
     </div>
-
 </div>
 
 <div id="success-screen">
-    <h1>YAYYY! I KNEW IT! 🌹❤️</h1>
-    <h3>See you soon my Valentine! 😘</h3>
-
-    <img id="loveGif" 
-         src="https://media.tenor.com/gU5h5jD1iWMAAAAC/rose-flower.gif" 
-         alt="Cute hearts and roses">
+    <div class="big-heart">💖</div>
+    <div class="success-text">YAYYY! <br> I KNEW IT! 😎🌹</div>
+    <div style="font-size: 4rem; margin-top: 20px;">🐻🌹🥰</div>
 </div>
 
 <script>
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (Math.random() * 2 + 3) + "s"; // Random speed
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
-    }
-    setInterval(createHeart, 300);
-
+    // 1. Moving the No Button
     function moveButton() {
         const btn = document.getElementById("noBtn");
         const x = Math.random() * (window.innerWidth - 100);
@@ -180,13 +181,36 @@
         btn.style.top = y + "px";
     }
 
+    // 2. Success Function
     function acceptLove() {
         document.getElementById("main-screen").style.display = "none";
-        document.getElementById("success-screen").style.display = "flex";
+        const successScreen = document.getElementById("success-screen");
+        successScreen.style.display = "flex";
         
-        // Burst of hearts on success
-        for(let i=0; i<30; i++) {
-            setTimeout(createHeart, i * 50);
+        // Start the emoji rain
+        startEmojiRain();
+    }
+
+    // 3. Emoji Rain Logic (Roses and Hearts)
+    function startEmojiRain() {
+        const emojis = ["🌹", "❤️", "🥰", "💖", "💝", "🍫", "🐻"];
+        
+        // Create 100 falling emojis
+        for (let i = 0; i < 100; i++) {
+            setTimeout(() => {
+                const el = document.createElement("div");
+                el.className = "emoji-rain";
+                el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                el.style.left = Math.random() * 100 + "vw";
+                el.style.animationDuration = (Math.random() * 2 + 2) + "s"; // Random speed
+                el.style.fontSize = (Math.random() * 20 + 20) + "px"; // Random size
+                
+                document.body.appendChild(el);
+                
+                // Remove element after animation to keep browser fast
+                setTimeout(() => el.remove(), 5000);
+            }, i * 50); // Stagger the rain
         }
     }
 </script>
